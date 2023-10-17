@@ -38,7 +38,7 @@ class handDetector:
         return img
 
     def findPosition(self, img, handNo=0, draw=False):
-
+        """  This will Find the position of 21 points of hand and return as a list """
         lmList = []
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
@@ -49,7 +49,7 @@ class handDetector:
                 # print(id, cx, cy)
                 lmList.append([id, cx, cy])
                 if draw:
-                    cv2.circle(img, (cx, cy), 10, (255, 0, 255), cv2.FILLED)
+                    cv2.circle(img, (cx, cy), 3, (255, 0, 255), cv2.FILLED)
 
         return lmList
 
