@@ -1,82 +1,191 @@
-import cv2
+import cv2 as cv
 import mediapipe as mp
-import time
-
-"""
-cv2 -> used to detect cammara or video
-mediapipe -> used for different computer vision technique
-time -> to get the real time
-
-"""
-
-# Start --> Class : handDetector
 
 
-class handDetector:
-    def __init__(self, mode=False, maxHands=2, modelComplexity=1, detectionCon=0.5, trackCon=0.5):
-        self.mode = mode
-        self.maxHands = maxHands
-        self.modelComplexity = modelComplexity
-        self.detectionCon = detectionCon
-        self.trackCon = trackCon
+class HandTracker:
 
-        self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands(
-            self.mode, self.maxHands, self.modelComplexity, self.detectionCon, self.trackCon)
-        self.mpDraw = mp.solutions.drawing_utils
+    def __init__(self, draw=True,
+                 static_image_mode=False,
+                 max_num_hands=2,
+                 model_complexity=1,
+                 min_detection_confidence=0.5,
+                 min_tracking_confidence=0.5):
 
-    def findHands(self, img, draw=True):
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        self.results = self.hands.process(imgRGB)
-        # print(results.multi_hand_landmarks)
+        self.mphand = mp.solutions.hands
+        self.mpdraw = mp.solutions.drawing_utils
 
-        if self.results.multi_hand_landmarks:
-            for handLms in self.results.multi_hand_landmarks:
-                if draw:
-                    self.mpDraw.draw_landmarks(
-                        img, handLms, self.mpHands.HAND_CONNECTIONS)
-        return img
+        self.hand = self.mphand.Hands(static_image_mode, max_num_hands,
+                                      model_complexity, min_detection_confidence, min_tracking_confidence)
 
-    def findPosition(self, img, handNo=0, draw=False):
-        """  This will Find the position of 21 points of hand and return as a list """
-        lmList = []
-        if self.results.multi_hand_landmarks:
-            myHand = self.results.multi_hand_landmarks[handNo]
-            for id, lm in enumerate(myHand.landmark):
-                # print(id, lm)
-                h, w, c = img.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                # print(id, cx, cy)
-                lmList.append([id, cx, cy])
-                if draw:
-                    cv2.circle(img, (cx, cy), 3, (255, 0, 255), cv2.FILLED)
+    # Find Hand get shape  and number of detected hans  ##########################################
+    def findHand(self, img, lineCol=(255, 255, 255), dotCol=(235, 206, 135)):
+        imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        self.result = self.hand.process(imgRGB)
+        self.shape = img.shape
+        self.numOfHands = 0
 
-        return lmList
+        if self.result.multi_hand_landmarks:
+            tlmk = self.result.multi_hand_landmarks
+            self.numOfHands = len(tlmk)
+
+    # find list of all HandMarks
+    def findlmk(self, lineCol=(255, 255, 255), dotCol=(235, 206, 135)):
+        ''' Before calling this call "findHand()" '''
+
+        list = []
+        hei, wid, cha = self.shape
+        if self.result.multi_hand_landmarks:
+            for handNo in range(0, self.numOfHands):
+                l1 = []
+                tlmk = self.result.multi_hand_landmarks[handNo].landmark
+                for lmk in tlmk:
+                    l1.append([int(lmk.x * wid), int(lmk.y * hei)])  # [x, y]
+                list.append(l1)
+
+        return list
+
+    #  find Bounding Box ################################################################
+    def findBoundingBox(self, list):
+        bbox = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                bbox.append(self.__findBoundingBox1(list[handNo]))
+
+            return bbox
+
+    def __findBoundingBox1(self, list):
+        minHei, minWid, maxHei, maxWid = 1e9, 1e9, -1e9, -1e9
+        if len(list) > 0:
+            for li in list:
+                minHei = min(li[1], minHei)
+                maxHei = max(li[1], maxHei)
+                minWid = min(li[0], minWid)
+                maxWid = max(li[0], maxWid)
+
+        return [minHei, maxHei, minWid, maxWid]
+
+    #  landmark TIP ################################################################
+    def landmarkTip(self, list):
+        tip = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                tip.append(self.__landmarkTip1(list[handNo]))
+
+        return tip
+
+    def __landmarkTip1(self, list):
+        tip = []
+
+        if len(list) > 0:
+            for indx in range(4, 21, 4):
+                tip.append(list[indx])
+        return tip
+
+    #  landmark DIP ################################################################
+    def landmarkDip(self, list):
+        dip = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                dip.append(self.__landmarkDip1(list[handNo]))
+
+        return dip
+
+    def __landmarkDip1(self, list):
+        dip = []
+
+        if len(list) > 0:
+            for indx in range(3, 21, 4):
+                if indx != 0:
+                    dip.append(list[indx])
+        return dip
+
+    #  landmark PIP ################################################################
+    def landmarkPip(self, list):
+        pip = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                pip.append(self.__landmarkPip1(list[handNo]))
+
+        return pip
+
+    def __landmarkPip1(self, list):
+        pip = []
+
+        if len(list) > 0:
+            for indx in range(2, 21, 4):
+                if indx != 0:
+                    pip.append(list[indx])
+        return pip
+
+    #  landmark MCP ################################################################
+    def landmarkMcp(self, list):
+        mcp = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                mcp.append(self.__landmarkMcp1(list[handNo]))
+
+        return mcp
+
+    def __landmarkMcp1(self, list):
+        mcp = []
+
+        if len(list) > 0:
+            for indx in range(1, 21, 4):
+                if indx != 0:
+                    mcp.append(list[indx])
+        return mcp
+
+    #  landmark MCP ################################################################
+    def landmarkWrist(self, list):
+        wrist = []
+        if len(list) > 0:
+            for handNo in range(0, self.numOfHands):
+                wrist.append(self.__landmarkWrist1(list[handNo]))
+
+        return wrist
+
+    def __landmarkWrist1(self, list):
+        return list[0]
+
+    #  draw Skeleton ####################################################################
+    def drawSkl(self, img, list, lineCol=(255, 255, 255), dotCol=(235, 206, 135)):
+
+        tlmk = self.result.multi_hand_landmarks
+        if tlmk:
+            for hlm in tlmk:
+                self.mpdraw.draw_landmarks(img, hlm, self.mphand.HAND_CONNECTIONS,
+                                           self.mpdraw.DrawingSpec(
+                                               color=dotCol),
+                                           self.mpdraw.DrawingSpec(color=lineCol))
+
+                tip = self.landmarkTip(list)
+                for handNo in range(0, self.numOfHands):
+                    for point in tip[handNo]:
+                        cv.circle(img, point, 7, dotCol, cv.FILLED)
+
+                    cv.circle(img, list[handNo][0], 7,
+                              self.mpdraw.RED_COLOR, cv.FILLED)
 
 
-# End --> Class : handDetector
-
+# Main Function
 def main():
-    pTime = 0
-    cTime = 0
-    cap = cv2.VideoCapture(0)
-    detector = handDetector()
+    cap = cv.VideoCapture(0)
+    hand = HandTracker()
+
     while True:
         success, img = cap.read()
-        img = detector.findHands(img)
-        lmList = detector.findPosition(img)
-        if len(lmList) != 0:
-            print(lmList[4])
+        hand.findHand(img)
+        list = hand.findlmk()
+        bbox = hand.findBoundingBox(list)
+        # tip = hand.landmarkTip(list)
 
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
+        hand.drawSkl(img, list)
 
-        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
-                    (255, 0, 255), 3)
 
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        cv.imshow("Hand Detector", img)
+
+        if cv.waitKey(1) & 0xFF == 27:
+            break
 
 
 if __name__ == "__main__":
