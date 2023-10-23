@@ -27,6 +27,7 @@ class HandTracker:
         if self.result.multi_hand_landmarks:
             tlmk = self.result.multi_hand_landmarks
             self.numOfHands = len(tlmk)
+            self.handInfo = self.result.multi_handedness
 
     # find list of all HandMarks
     def findlmk(self, lineCol=(255, 255, 255), dotCol=(235, 206, 135)):
@@ -158,13 +159,34 @@ class HandTracker:
                                                color=dotCol),
                                            self.mpdraw.DrawingSpec(color=lineCol))
 
-                tip = self.landmarkTip(list)
+                TIP = self.landmarkTip(list)
+                bbox = self.findBoundingBox(list)
                 for handNo in range(0, self.numOfHands):
-                    for point in tip[handNo]:
+                    for point in TIP[handNo]:
                         cv.circle(img, point, 7, dotCol, cv.FILLED)
+                    
+                    xWrist, yWrist = list[handNo][0]
+                    cv.circle(img, (xWrist, yWrist), 7, self.mpdraw.RED_COLOR, cv.FILLED)
+                    yMin, yMax, xMin, xMax = bbox[handNo]
+                    pad, pad1 = 20, 10
+                    textHei = 25 
+                    cv.rectangle(img, (xMin-pad, yMin-pad), (xMax+pad, yMax+pad), dotCol, 1) 
+                    cv.rectangle(img, (xMin-pad, yMin-pad - textHei), (xMax+pad, yMin-pad), dotCol, cv.FILLED) 
+                    cv.putText(img, str(handNo), (xWrist+pad1, yWrist+pad1), cv.FONT_HERSHEY_COMPLEX,  0.5, lineCol, 1)
+                    
+                    # Handedness
+                    hand = self.handInfo[handNo].classification[0]
+                    
+                    # print(hand)
+                    
+                    text = f"{hand.label} | {hand.score*100:.2f}%"
+                    cv.putText(img, text, (xMin, yMin-pad - textHei + pad), cv.FONT_HERSHEY_SIMPLEX,  0.7, lineCol, 1)
+                    
+                    
+                # Creating Box
+                
+                    
 
-                    cv.circle(img, list[handNo][0], 7,
-                              self.mpdraw.RED_COLOR, cv.FILLED)
 
 
 # Main Function
