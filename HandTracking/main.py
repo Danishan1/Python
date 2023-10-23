@@ -22,7 +22,7 @@ while True:
     fps = 1 / (cTime - pTime)
     pTime = cTime
 
-    cv2.putText(img, str(int(fps)), (10, 40),
+    cv2.putText(img, str(int(fps))+' FPS', (10, 40),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, skyBlue, 2)
 
     cv2.imshow("Image", img)

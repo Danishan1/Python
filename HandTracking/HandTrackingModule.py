@@ -1,6 +1,34 @@
 import cv2 as cv
 import mediapipe as mp
 
+'''
+
+class HandTracker:
+    self.mphand
+    self.mpdraw
+    self.hand
+    self.result
+    self.shape
+    self.numOfHands
+    self.handInfo
+    
+    def findHand(self, img):
+    def findlmk(self):
+    def findBoundingBox(self, list):
+    def landmarkTip(self, list):
+    def landmarkDip(self, list):
+    def landmarkPip(self, list):
+    def landmarkMcp(self, list):
+    def landmarkWrist(self, list):
+    def drawSkl(self, img, list, lineCol=(255, 255, 255), dotCol=(235, 206, 135)):
+    def Thumb(self, list):
+    def foreFinger(self, list):
+    def midFinger(self, list):
+    def ringFinger(self, list):
+    def pinkyFinger(self, list):
+
+'''
+
 
 class HandTracker:
 
@@ -136,7 +164,7 @@ class HandTracker:
                     mcp.append(list[indx])
         return mcp
 
-    #  landmark MCP ################################################################
+    #  landmark Wrist ################################################################
     def landmarkWrist(self, list):
         wrist = []
         if len(list) > 0:
@@ -164,29 +192,76 @@ class HandTracker:
                 for handNo in range(0, self.numOfHands):
                     for point in TIP[handNo]:
                         cv.circle(img, point, 7, dotCol, cv.FILLED)
-                    
+
                     xWrist, yWrist = list[handNo][0]
-                    cv.circle(img, (xWrist, yWrist), 7, self.mpdraw.RED_COLOR, cv.FILLED)
+                    cv.circle(img, (xWrist, yWrist), 7,
+                              self.mpdraw.RED_COLOR, cv.FILLED)
                     yMin, yMax, xMin, xMax = bbox[handNo]
                     pad, pad1 = 20, 10
-                    textHei = 25 
-                    cv.rectangle(img, (xMin-pad, yMin-pad), (xMax+pad, yMax+pad), dotCol, 1) 
-                    cv.rectangle(img, (xMin-pad, yMin-pad - textHei), (xMax+pad, yMin-pad), dotCol, cv.FILLED) 
-                    cv.putText(img, str(handNo), (xWrist+pad1, yWrist+pad1), cv.FONT_HERSHEY_COMPLEX,  0.5, lineCol, 1)
-                    
+                    textHei = 25
+                    cv.rectangle(img, (xMin-pad, yMin-pad),
+                                 (xMax+pad, yMax+pad), dotCol, 1)
+                    cv.rectangle(img, (xMin-pad, yMin-pad - textHei),
+                                 (xMax+pad, yMin-pad), dotCol, cv.FILLED)
+                    cv.putText(img, str(handNo), (xWrist+pad1, yWrist+pad1),
+                               cv.FONT_HERSHEY_COMPLEX,  0.5, lineCol, 1)
+
                     # Handedness
                     hand = self.handInfo[handNo].classification[0]
-                    
-                    # print(hand)
-                    
-                    text = f"{hand.label} | {hand.score*100:.2f}%"
-                    cv.putText(img, text, (xMin, yMin-pad - textHei + pad), cv.FONT_HERSHEY_SIMPLEX,  0.7, lineCol, 1)
-                    
-                    
-                # Creating Box
-                
-                    
 
+                    # print(hand)
+
+                    text = f"{hand.label} | {hand.score*100:.2f}%"
+                    cv.putText(img, text, (xMin, yMin-pad - textHei + pad),
+                               cv.FONT_HERSHEY_SIMPLEX,  0.7, lineCol, 1)
+
+                # Creating Box
+
+    # Thumb  #####################################################################
+
+    def Thumb(self, list):
+        fin = []
+        if len(list) > 0:
+            for tlist in list:
+                fin.append([tlist[1], tlist[2], tlist[3], tlist[4]])
+
+        return fin
+
+    # ForeFinger  #####################################################################
+    def foreFinger(self, list):
+        fin = []
+        if len(list) > 0:
+            for tlist in list:
+                fin.append([tlist[5], tlist[6], tlist[7], tlist[8]])
+
+        return fin
+
+    # Middle Finger  #####################################################################
+    def midFinger(self, list):
+        fin = []
+        if len(list) > 0:
+            for tlist in list:
+                fin.append([tlist[9], tlist[10], tlist[11], tlist[12]])
+
+        return fin
+
+    # Ring Finger  #####################################################################
+    def ringFinger(self, list):
+        fin = []
+        if len(list) > 0:
+            for tlist in list:
+                fin.append([tlist[13], tlist[14], tlist[15], tlist[16]])
+
+        return fin
+
+    # pinky Finger  #####################################################################
+    def pinkyFinger(self, list):
+        fin = []
+        if len(list) > 0:
+            for tlist in list:
+                fin.append([tlist[17], tlist[18], tlist[19], tlist[20]])
+
+        return fin
 
 
 # Main Function
@@ -202,7 +277,6 @@ def main():
         # tip = hand.landmarkTip(list)
 
         hand.drawSkl(img, list)
-
 
         cv.imshow("Hand Detector", img)
 
