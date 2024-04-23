@@ -23,7 +23,7 @@ class mergeDataset(Dataset):
         return self.xTrain[idx], self.yTrain[idx]
 
 
-class CustomDataset():
+class CustomDataset:
     def load(self, isTime=True):
         startTime = time.time()
 
@@ -44,6 +44,10 @@ class CustomDataset():
         xTest = torch.tensor(xTest)
         yTest = torch.tensor(yTest)
 
+        # Adding Channel to our image
+        xTrain = xTrain.unsqueeze(dim=1)
+        xTest = xTest.unsqueeze(dim=1)
+
         # Makeing Batches for Our Data
 
         batchSize = 32
@@ -51,10 +55,11 @@ class CustomDataset():
         testDataset = mergeDataset(xTest, yTrain)
         trainDataloader = DataLoader(trainDataset, batch_size=batchSize, shuffle=True)
         testDataloader = DataLoader(testDataset, batch_size=batchSize, shuffle=True)
-        
+
         from helperFunction import printTime
-        if isTime == True : 
+
+        if isTime == True:
             str = f"Tensor Conversion, Merge Data & Label, and Converted into Batches of Size {batchSize}"
             printTime(startTime, str)
-            
+
         return (trainDataloader, testDataloader)

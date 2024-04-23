@@ -38,7 +38,7 @@ def showImages(images):
     plt.show()  # Show plot without blocking
 
 
-def showRandomImage(images, imageLables: None, num=10):
+def showRandomImage(images, imageLables=None, num=10):
     ch = 1
     while ch != 0 :
         images_2_show = []
