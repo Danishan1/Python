@@ -1,0 +1,6 @@
+
+
+###### Baseline Model Training ######
+
+Epoch0: Model Loss 78.623% Model Accuracy 83.96%
+Epoch5: Model Loss 37.668% Model Accuracy 90.71%

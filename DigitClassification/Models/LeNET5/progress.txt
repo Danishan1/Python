@@ -1,0 +1,11 @@
+On Epoch: 0 Train Loss: 2.285 | Test Loss: 2.306 Accuracy Score: 10.793
+On Epoch: 5 Train Loss: 1.543 | Test Loss: 2.356 Accuracy Score: 10.154
+On Epoch: 10 Train Loss: 1.508 | Test Loss: 2.359 Accuracy Score: 9.984
+On Epoch: 15 Train Loss: 1.496 | Test Loss: 2.359 Accuracy Score: 10.054
+On Epoch: 0 Train Loss: 2.287 | Test Loss: 2.304 Accuracy Score: 10.863
+On Epoch: 0 Train Loss: 2.290 | Test Loss: 2.302 Accuracy Score: 10.024
+On Epoch: 0 Train Loss: 2.290 | Test Loss: 2.303 Accuracy Score: 11.082
+On Epoch: 0 Train Loss: 2.287 | Test Loss: 2.304 Accuracy Score: 10.723
+On Epoch: 0 Train Loss: 2.264 | Test Loss: 2.310 Accuracy Score: 10.234
+On Epoch: 5 Train Loss: 1.524 | Test Loss: 2.356 Accuracy Score: 10.144
+On Epoch: 0 Train Loss: 0.737 | Test Loss: 7.991 Accuracy Score: 10.154

@@ -1,0 +1,36 @@
+
+###### CNN Model Training | Device: NVIDIA GeForce RTX 3060 ######
+
+Epoch-1 | Model Loss: 101.788% | Model Accuracy: 74.13% | Cmpletion Time: 42.60884sec
+Epoch-11 | Model Loss: 37.162% | Model Accuracy: 93.01% | Cmpletion Time: 2min 36.45247sec
+Epoch-21 | Model Loss: 18.060% | Model Accuracy: 95.26% | Cmpletion Time: 4min 30.36690sec
+Epoch-31 | Model Loss: 15.247% | Model Accuracy: 96.11% | Cmpletion Time: 6min 26.58178sec
+Epoch-41 | Model Loss: 23.883% | Model Accuracy: 96.48% | Cmpletion Time: 8min 22.80683sec
+Epoch-51 | Model Loss: 14.434% | Model Accuracy: 96.84% | Cmpletion Time: 10min 18.86654sec
+Epoch-61 | Model Loss: 11.900% | Model Accuracy: 97.06% | Cmpletion Time: 12min 14.37308sec
+Epoch-71 | Model Loss: 13.033% | Model Accuracy: 97.15% | Cmpletion Time: 14min 11.66817sec
+Epoch-81 | Model Loss: 8.397% | Model Accuracy: 97.37% | Cmpletion Time: 16min 7.80099sec
+Epoch-91 | Model Loss: 11.253% | Model Accuracy: 97.57% | Cmpletion Time: 18min 2.52096sec
+Epoch-101 | Model Loss: 7.094% | Model Accuracy: 97.64% | Cmpletion Time: 19min 57.47728sec
+Epoch-111 | Model Loss: 4.285% | Model Accuracy: 97.74% | Cmpletion Time: 21min 51.50532sec
+Epoch-121 | Model Loss: 7.828% | Model Accuracy: 97.82% | Cmpletion Time: 23min 44.56687sec
+Epoch-131 | Model Loss: 6.293% | Model Accuracy: 97.88% | Cmpletion Time: 25min 38.79729sec
+Epoch-141 | Model Loss: 6.301% | Model Accuracy: 97.90% | Cmpletion Time: 2hr 8min 18.80135sec
+Epoch-151 | Model Loss: 10.068% | Model Accuracy: 98.01% | Cmpletion Time: 2hr 10min 15.65346sec
+Epoch-161 | Model Loss: 12.330% | Model Accuracy: 98.06% | Cmpletion Time: 2hr 12min 14.41190sec
+Epoch-171 | Model Loss: 7.338% | Model Accuracy: 98.05% | Cmpletion Time: 2hr 14min 10.36155sec
+Epoch-181 | Model Loss: 9.167% | Model Accuracy: 98.10% | Cmpletion Time: 2hr 16min 17.46927sec
+Epoch-191 | Model Loss: 7.258% | Model Accuracy: 98.10% | Cmpletion Time: 2hr 18min 14.81874sec
+
+*********** Model: CNN Model Completion Summary ***********
+Parameter List :
+ - Model Name : CNN Model 
+ - Epochs: 200 
+ - Model Loss: 7.760% 
+ - Model Accuracy: 98.16% 
+ - Completion Time: 2hr 20min 1.50950sec 
+ - Device NVIDIA GeForce RTX 3060 
+ - Learnable Paramters : 934798
+
+ ****** End *******
+

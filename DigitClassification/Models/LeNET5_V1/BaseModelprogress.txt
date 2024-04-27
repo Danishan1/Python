@@ -1,0 +1,36 @@
+
+###### Baseline Model Training | Device: NVIDIA GeForce RTX 3060 ######
+
+Epoch-1 | Model Loss: 71.626% | Model Accuracy: 83.81% | Cmpletion Time: 22.14220sec
+Epoch-11 | Model Loss: 27.365% | Model Accuracy: 92.23% | Cmpletion Time: 29.21791sec
+Epoch-21 | Model Loss: 31.607% | Model Accuracy: 94.17% | Cmpletion Time: 36.27381sec
+Epoch-31 | Model Loss: 26.117% | Model Accuracy: 95.28% | Cmpletion Time: 43.23698sec
+Epoch-41 | Model Loss: 20.535% | Model Accuracy: 96.10% | Cmpletion Time: 50.15360sec
+Epoch-51 | Model Loss: 11.379% | Model Accuracy: 96.71% | Cmpletion Time: 57.10474sec
+Epoch-61 | Model Loss: 6.068% | Model Accuracy: 97.18% | Cmpletion Time: 1min 4.20888sec
+Epoch-71 | Model Loss: 11.920% | Model Accuracy: 97.56% | Cmpletion Time: 1min 11.34768sec
+Epoch-81 | Model Loss: 16.486% | Model Accuracy: 97.88% | Cmpletion Time: 1min 18.38944sec
+Epoch-91 | Model Loss: 5.717% | Model Accuracy: 98.11% | Cmpletion Time: 1min 25.48409sec
+Epoch-101 | Model Loss: 4.343% | Model Accuracy: 98.32% | Cmpletion Time: 1min 32.51458sec
+Epoch-111 | Model Loss: 8.458% | Model Accuracy: 98.48% | Cmpletion Time: 1min 39.57953sec
+Epoch-121 | Model Loss: 4.069% | Model Accuracy: 98.65% | Cmpletion Time: 1min 46.60652sec
+Epoch-131 | Model Loss: 4.856% | Model Accuracy: 98.79% | Cmpletion Time: 1min 53.77298sec
+Epoch-141 | Model Loss: 7.468% | Model Accuracy: 98.90% | Cmpletion Time: 2min 0.71188sec
+Epoch-151 | Model Loss: 3.231% | Model Accuracy: 99.00% | Cmpletion Time: 2min 7.64898sec
+Epoch-161 | Model Loss: 2.422% | Model Accuracy: 99.10% | Cmpletion Time: 2min 14.65032sec
+Epoch-171 | Model Loss: 1.358% | Model Accuracy: 99.17% | Cmpletion Time: 2min 21.79760sec
+Epoch-181 | Model Loss: 4.648% | Model Accuracy: 99.22% | Cmpletion Time: 2min 28.82505sec
+Epoch-191 | Model Loss: 4.180% | Model Accuracy: 99.29% | Cmpletion Time: 2min 35.92484sec
+
+*********** Model: Baseline Model Completion Summary ***********
+Parameter List :
+ - Model Name : Baseline Model 
+ - Epochs: 200 
+ - Model Loss: 2.743% 
+ - Model Accuracy: 99.34% 
+ - Completion Time: 2min 42.44471sec 
+ - Device NVIDIA GeForce RTX 3060 
+ - Learnable Paramters : 623290
+
+ ****** End *******
+

@@ -29,7 +29,6 @@ class leNET5(nn.Module):
             nn.Linear(16 * 4 * 4, 120),  # Layer have 120 Neurons
             nn.Linear(120, 84),  # Layer have 84 Neurons
             nn.Linear(84, outputLayer),  # Layer have 10 Neurons
-            nn.Softmax(dim=1)
         )
         
         printTime(startTime, "LeNET-5 Model Instance Created Sucessfully")

@@ -1,19 +1,18 @@
 from torch import nn
 from torch.optim import SGD
-from torch import cuda
-from torch import float32 as trochFloat32
-from tqdm.auto import tqdm
-from torch import inference_mode
+import torch
 
 import leNET
 from helperFunction import getAccuracy
 
-device = "cuda" if cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 class ModelTraining:
 
     def __init__(self, model, trainDataLoader, testDataLoader):
+        
+        print(torch.cuda.is_available())
 
         self.startTime = leNET.time()
         self.trainDataLoader = trainDataLoader
@@ -21,7 +20,7 @@ class ModelTraining:
         # Model Training
 
         # Setting Up Hyper parameters
-        self.LEARNING_RATE = 0.1
+        self.LEARNING_RATE = 0.01
         self.EPOCHS = 10
 
         # Creating Instances for the Module
@@ -47,7 +46,7 @@ class ModelTraining:
 
             # Putting Model on Train Mode
             self.model.eval()
-            with inference_mode():
+            with torch.inference_mode():
                 for testData, testLabel in self.testDataLoader:
                     teLoss, aScore = self.testingStep(testData, testLabel)
                     testLoss += teLoss
@@ -62,7 +61,7 @@ class ModelTraining:
                 f"On Epoch: {epoch} Train Loss: {trainLoss:0.3f} | Test Loss: {testLoss:0.3f} Accuracy Score: {accuracyScore:0.3f}"
             )
 
-            if epoch % 2 == 0:
+            if epoch % 5 == 0:
                 file = "DigitClassification/Models/LeNET5/progress.txt"
                 with open(file, "a") as file:
                     line = f"On Epoch: {epoch} Train Loss: {trainLoss:0.3f} | Test Loss: {testLoss:0.3f} Accuracy Score: {accuracyScore:0.3f}"
@@ -72,14 +71,19 @@ class ModelTraining:
                         f"Successfully Run {epoch} Epoch outof {self.EPOCHS}",
                     )
 
-    
+        file = "DigitClassification/Models/LeNET5/lenNET.pth"
+        torch.save(obj=self.model.state_dict(), f=file)
+        file2 = "DigitClassification/Models/LeNET5/lenNETOpt.pth"
+        torch.save(obj=self.optimiser.state_dict(), f=file2)
+
     def trainingStep(self, X, y):
 
         X = X.to(device)
         y = y.to(device)
-        X = X.type(trochFloat32)
+        X = X.type(torch.float32)
 
         yPre = self.model(X)
+        
         loss = self.lossFun(yPre, y)
 
         self.optimiser.zero_grad()
@@ -93,10 +97,10 @@ class ModelTraining:
 
         X = X.to(device)
         y = y.to(device)
-        X = X.type(trochFloat32)
+        X = X.type(torch.float32)
 
         yPre = self.model(X)
         testLoss = self.lossFun(yPre, y)
-        accuracyScore = getAccuracy(y.cpu(), yPre.argmax(dim=1))
+        accuracyScore = getAccuracy(y, yPre.argmax(dim=1))
 
         return testLoss.item(), accuracyScore

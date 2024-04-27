@@ -52,7 +52,4 @@ model = leNET.leNET5(10)
 ModelTraining(model, trainDataloader, testDataloader)
 
 
-
-
-
 printTime(startTime, "Model Completed Successfully")
