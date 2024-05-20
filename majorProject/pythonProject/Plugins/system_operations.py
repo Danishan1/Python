@@ -18,8 +18,8 @@ class SystemTasks:
 
     def select(self):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('a')
-        self.keyboard.release('a')
+        self.keyboard.press("a")
+        self.keyboard.release("a")
         self.keyboard.release(Key.ctrl)
 
     def hitEnter(self):
@@ -34,26 +34,26 @@ class SystemTasks:
     def copy(self):
         self.select()
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('c')
-        self.keyboard.release('c')
+        self.keyboard.press("c")
+        self.keyboard.release("c")
         self.keyboard.release(Key.ctrl)
 
     def paste(self):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('v')
-        self.keyboard.release('v')
+        self.keyboard.press("v")
+        self.keyboard.release("v")
         self.keyboard.release(Key.ctrl)
 
     def new_file(self):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('n')
-        self.keyboard.release('n')
+        self.keyboard.press("n")
+        self.keyboard.release("n")
         self.keyboard.release(Key.ctrl)
 
     def save(self, name):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('s')
-        self.keyboard.release('s')
+        self.keyboard.press("s")
+        self.keyboard.release("s")
         self.keyboard.release(Key.ctrl)
         time.sleep(0.2)
         self.write(name)
@@ -72,14 +72,14 @@ class TabOpt:
 
     def closeTab(self):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('w')
-        self.keyboard.release('w')
+        self.keyboard.press("w")
+        self.keyboard.release("w")
         self.keyboard.release(Key.ctrl)
 
     def newTab(self):
         self.keyboard.press(Key.ctrl)
-        self.keyboard.press('t')
-        self.keyboard.release('t')
+        self.keyboard.press("t")
+        self.keyboard.release("t")
         self.keyboard.release(Key.ctrl)
 
 
@@ -115,20 +115,22 @@ class WindowOpt:
 
     def Screen_Shot(self):
         im = ImageGrab.grab()
-        im.save(f'../Data/Screenshots/ss_{randint(1, 100)}.jpg')
+        im.save(f"../Data/Screenshots/ss_{randint(1, 100)}.jpg")
 
 
 def systemInfo():
     c = wmi.WMI()
     my_system_1 = c.Win32_LogicalDisk()[0]
     my_system_2 = c.Win32_ComputerSystem()[0]
-    info = f"Total Disk Space: {round(int(my_system_1.Size)/(1024**3),2)} GB\n" \
-           f"Free Disk Space: {round(int(my_system_1.Freespace)/(1024**3),2)} GB\n" \
-           f"Manufacturer: {my_system_2.Manufacturer}\n" \
-           f"Model: {my_system_2. Model}\n" \
-           f"Owner: {my_system_2.PrimaryOwnerName}\n" \
-           f"Number of Processors: {psutil.cpu_count()}\n" \
-           f"System Type: {my_system_2.SystemType}"
+    info = (
+        f"Total Disk Space: {round(int(my_system_1.Size)/(1024**3),2)} GB\n"
+        f"Free Disk Space: {round(int(my_system_1.Freespace)/(1024**3),2)} GB\n"
+        f"Manufacturer: {my_system_2.Manufacturer}\n"
+        f"Model: {my_system_2. Model}\n"
+        f"Owner: {my_system_2.PrimaryOwnerName}\n"
+        f"Number of Processors: {psutil.cpu_count()}\n"
+        f"System Type: {my_system_2.SystemType}"
+    )
     return info
 
 
@@ -147,22 +149,26 @@ def system_stats():
     battery_percent = psutil.sensors_battery().percent
     memory_in_use = convert_size(psutil.virtual_memory().used)
     total_memory = convert_size(psutil.virtual_memory().total)
-    stats = f"Currently {cpu_stats} percent of CPU, {memory_in_use} of RAM out of total {total_memory} is being used and " \
-                f"battery level is at {battery_percent}%"
+    stats = (
+        f"Currently {cpu_stats} percent of CPU, {memory_in_use} of RAM out of total {total_memory} is being used and "
+        f"battery level is at {battery_percent}%"
+    )
     return stats
 
 
 def app_path(app):
-    app_paths = {'access': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\ACCICONS.exe',
-                 'powerpoint': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\POWERPNT.exe',
-                 'word': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\WINWORD.exe',
-                 'excel': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\EXCEL.exe',
-                 'outlook': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.exe',
-                 'onenote': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\ONENOTE.exe',
-                 'publisher': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\MSPUB.exe',
-                 'sharepoint': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\GROOVE.exe',
-                 'infopath designer': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\INFOPATH.exe',
-                 'infopath filler': 'C:\\Program Files (x86)\\Microsoft Office\\Office14\\INFOPATH.exe'}
+    app_paths = {
+        "access": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\ACCICONS.exe",
+        "powerpoint": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\POWERPNT.exe",
+        "word": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\WINWORD.exe",
+        "excel": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\EXCEL.exe",
+        "outlook": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.exe",
+        "onenote": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\ONENOTE.exe",
+        "publisher": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\MSPUB.exe",
+        "sharepoint": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\GROOVE.exe",
+        "infopath designer": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\INFOPATH.exe",
+        "infopath filler": "C:\\Program Files (x86)\\Microsoft Office\\Office14\\INFOPATH.exe",
+    }
     try:
         return app_paths[app]
     except KeyError:
@@ -170,8 +176,18 @@ def app_path(app):
 
 
 def open_app(query):
-    ms_office = ('access', 'powerpoint', 'word', 'excel', 'outlook', 'onenote', 'publisher', 'sharepoint', 'infopath designer',
-                 'infopath filler')
+    ms_office = (
+        "access",
+        "powerpoint",
+        "word",
+        "excel",
+        "outlook",
+        "onenote",
+        "publisher",
+        "sharepoint",
+        "infopath designer",
+        "infopath filler",
+    )
     for app in ms_office:
         if app in query:
             path = app_path(app)
@@ -180,9 +196,10 @@ def open_app(query):
     AppOpener.run(query[5:])
     return True
 
+
 def take_note(note):
     open_app("open notepad")
     time.sleep(0.2)
     sys_task = SystemTasks()
     sys_task.write(note)
-    sys_task.save(f'note_{randint(1, 100)}')
+    sys_task.save(f"note_{randint(1, 100)}")
